@@ -35,29 +35,39 @@ function show($staropt$star, e) {
         return show(undefined, e[0]) + (" + " + show(undefined, e[1]));
     case /* Times */11 :
         return show(undefined, e[0]) + (" * " + show(undefined, e[1]));
-    case /* Characteristic */12 :
+    case /* Minus */12 :
+        return show(undefined, e[0]) + (" - " + show(undefined, e[1]));
+    case /* Divide */13 :
+        return show(undefined, e[0]) + (" / " + show(undefined, e[1]));
+    case /* Characteristic */14 :
         return e[0] + ("." + e[1]);
-    case /* ToLong */13 :
+    case /* ToLong */15 :
         return "(long)" + show(undefined, e[0]);
-    case /* Coalesce */14 :
+    case /* ToFloat */16 :
+        return "(float)" + show(undefined, e[0]);
+    case /* ToDate */17 :
+        return "ToDate(" + (show(undefined, e[0]) + ")");
+    case /* DateDiffYears */18 :
+        return "DateDiffYears(" + (show(undefined, e[0]) + (", " + (show(undefined, e[1]) + ")")));
+    case /* Coalesce */19 :
         return show(undefined, e[0]) + (" ?? " + show(undefined, e[1]));
-    case /* IsDefined */15 :
+    case /* IsDefined */20 :
         return "IsDefined(" + (show(undefined, e[0]) + ")");
-    case /* Contains */16 :
+    case /* Contains */21 :
         return "Contains(" + (show(undefined, e[0]) + (", " + (show(undefined, e[1]) + ")")));
-    case /* Strip */17 :
+    case /* Strip */22 :
         return "Strip(" + (show(undefined, e[0]) + ")");
-    case /* List */18 :
+    case /* List */23 :
         return "[" + (Curry._2(Relude_List_Specializations.$$String.joinWith, ", ", Relude_List.map((function (eta) {
                               return show(undefined, eta);
                             }))(e[0])) + "]");
-    case /* Lookup */19 :
+    case /* Lookup */24 :
         return "Lookup(" + (show(undefined, e[0]) + (", " + (show(undefined, e[1]) + ")")));
-    case /* Map */20 :
+    case /* Map */25 :
         return "{\n" + (Curry._2(Relude_List_Specializations.$$String.joinWith, ",\n", Relude_List.map((function (param) {
                               return spaces + ("  " + (show(undefined, param[0]) + (": " + show(undefined, param[1]))));
                             }))(e[0])) + (spaces + "\n}"));
-    case /* Range */21 :
+    case /* Range */26 :
         var mapOption = function (o) {
           return Relude_Option.getOrElse("", Relude_Option.map((function (eta) {
                             return show(undefined, eta);

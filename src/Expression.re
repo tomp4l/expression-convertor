@@ -11,8 +11,13 @@ type t =
   | Not(t)
   | Plus(t, t)
   | Times(t, t)
+  | Minus(t, t)
+  | Divide(t, t)
   | Characteristic(string, string)
   | ToLong(t)
+  | ToFloat(t)
+  | ToDate(t)
+  | DateDiffYears(t, t)
   | Coalesce(t, t)
   | IsDefined(t)
   | Contains(t, t)
@@ -53,11 +58,17 @@ let rec show = (~indent=0, e) => {
   | And(l, r) => show(l) ++ " && " ++ show(r)
   | Characteristic(provider, key) => provider ++ "." ++ key
   | ToLong(v) => "(long)" ++ show(v)
+  | ToFloat(v) => "(float)" ++ show(v)
+  | ToDate(v) => "ToDate(" ++ show(v) ++ ")"
   | Coalesce(a, b) => show(a) ++ " ?? " ++ show(b)
   | IsDefined(a) => "IsDefined(" ++ show(a) ++ ")"
   | Contains(a, b) => "Contains(" ++ show(a) ++ ", " ++ show(b) ++ ")"
+  | DateDiffYears(from, to_) =>
+    "DateDiffYears(" ++ show(from) ++ ", " ++ show(to_) ++ ")"
   | Plus(a, b) => show(a) ++ " + " ++ show(b)
   | Times(a, b) => show(a) ++ " * " ++ show(b)
+  | Minus(a, b) => show(a) ++ " - " ++ show(b)
+  | Divide(a, b) => show(a) ++ " / " ++ show(b)
   | Strip(a) => "Strip(" ++ show(a) ++ ")"
   | List(l) =>
     "["
@@ -76,8 +87,9 @@ let rec show = (~indent=0, e) => {
     )
     ++ spaces
     ++ "\n}"
-  | Range(from, to_) => 
-    let mapOption = o => o |> Relude.Option.map(show) |> Relude.Option.getOrElse("");
-    mapOption(from)  ++ ".." ++ mapOption(to_)
+  | Range(from, to_) =>
+    let mapOption = o =>
+      o |> Relude.Option.map(show) |> Relude.Option.getOrElse("");
+    mapOption(from) ++ ".." ++ mapOption(to_);
   };
 };

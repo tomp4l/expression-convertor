@@ -66,7 +66,7 @@ function stringDecoder(json) {
 
 function characteristicDecoder(name, json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "characteristic", Decode_AsResult_OfParseError.Pipeline.string, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "data_source", Decode_AsResult_OfParseError.Pipeline.string, operator(name, (function (p, v) {
-                            return /* Characteristic */Block.__(12, [
+                            return /* Characteristic */Block.__(14, [
                                       p,
                                       v
                                     ]);
@@ -99,7 +99,7 @@ function leftRightDecoder(name, make, json) {
 
 function coalesceDecoder(json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "default", CamlinternalLazy.force(lazyExpressionDecoder), Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "value", CamlinternalLazy.force(lazyExpressionDecoder), operator("coalesce", (function (v, $$default) {
-                            return /* Coalesce */Block.__(14, [
+                            return /* Coalesce */Block.__(19, [
                                       v,
                                       $$default
                                     ]);
@@ -108,19 +108,19 @@ function coalesceDecoder(json) {
 
 function stripDecoder(json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "expression", CamlinternalLazy.force(lazyExpressionDecoder), operator("strip", (function (a) {
-                        return /* Strip */Block.__(17, [a]);
+                        return /* Strip */Block.__(22, [a]);
                       }))));
 }
 
 function listDecoder(json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "items", Curry._1(Decode_AsResult_OfParseError.Pipeline.list, CamlinternalLazy.force(lazyExpressionDecoder)), operator("list", (function (l) {
-                        return /* List */Block.__(18, [l]);
+                        return /* List */Block.__(23, [l]);
                       }))));
 }
 
 function rangeDecoder(json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.optionalField, "to", CamlinternalLazy.force(lazyExpressionDecoder), Curry._3(Decode_AsResult_OfParseError.Pipeline.optionalField, "from", CamlinternalLazy.force(lazyExpressionDecoder), operator("range", (function (from, to_) {
-                            return /* Range */Block.__(21, [
+                            return /* Range */Block.__(26, [
                                       from,
                                       to_
                                     ]);
@@ -129,7 +129,7 @@ function rangeDecoder(json) {
 
 function containsDecoder(json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "list", CamlinternalLazy.force(lazyExpressionDecoder), Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "item", CamlinternalLazy.force(lazyExpressionDecoder), operator("contain", (function (a, b) {
-                            return /* Contains */Block.__(16, [
+                            return /* Contains */Block.__(21, [
                                       a,
                                       b
                                     ]);
@@ -145,13 +145,13 @@ function mapDecoder(json) {
                                                         ];
                                                 })))));
                       })), operator("map", (function (l) {
-                        return /* Map */Block.__(20, [l]);
+                        return /* Map */Block.__(25, [l]);
                       }))));
 }
 
 function lookupDecoder(json) {
   return Curry._2(Decode_AsResult_OfParseError.Pipeline.run, json, Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "map", CamlinternalLazy.force(lazyExpressionDecoder), Curry._3(Decode_AsResult_OfParseError.Pipeline.field, "key", CamlinternalLazy.force(lazyExpressionDecoder), operator("lookup", (function (k, m) {
-                            return /* Lookup */Block.__(19, [
+                            return /* Lookup */Block.__(24, [
                                       k,
                                       m
                                     ]);
@@ -174,13 +174,13 @@ var lazyExpressionDecoder = Caml_obj.caml_lazy_make((function (param) {
                           /* :: */[
                             (function (param) {
                                 return valueDecoder("str-to-long", (function (v) {
-                                              return /* ToLong */Block.__(13, [v]);
+                                              return /* ToLong */Block.__(15, [v]);
                                             }), param);
                               }),
                             /* :: */[
                               (function (param) {
                                   return valueDecoder("is-defined", (function (v) {
-                                                return /* IsDefined */Block.__(15, [v]);
+                                                return /* IsDefined */Block.__(20, [v]);
                                               }), param);
                                 }),
                               /* :: */[
@@ -192,38 +192,30 @@ var lazyExpressionDecoder = Caml_obj.caml_lazy_make((function (param) {
                                 /* :: */[
                                   (function (param) {
                                       return valueDecoder("float-to-long", (function (v) {
-                                                    return /* ToLong */Block.__(13, [v]);
+                                                    return /* ToLong */Block.__(15, [v]);
                                                   }), param);
                                     }),
                                   /* :: */[
-                                    calculatedCharacteristicDecoder,
+                                    (function (param) {
+                                        return valueDecoder("long-to-float", (function (v) {
+                                                      return /* ToFloat */Block.__(16, [v]);
+                                                    }), param);
+                                      }),
                                     /* :: */[
-                                      longDecoder,
+                                      (function (param) {
+                                          return valueDecoder("str-to-date", (function (v) {
+                                                        return /* ToDate */Block.__(17, [v]);
+                                                      }), param);
+                                        }),
                                       /* :: */[
-                                        (function (param) {
-                                            return leftRightDecoder("less-than-or-equals", (function (l, r) {
-                                                          return /* Comparison */Block.__(6, [
-                                                                    "<=",
-                                                                    l,
-                                                                    r
-                                                                  ]);
-                                                        }), param);
-                                          }),
+                                        calculatedCharacteristicDecoder,
                                         /* :: */[
-                                          (function (param) {
-                                              return leftRightDecoder("greater-than-or-equals", (function (l, r) {
-                                                            return /* Comparison */Block.__(6, [
-                                                                      ">=",
-                                                                      l,
-                                                                      r
-                                                                    ]);
-                                                          }), param);
-                                            }),
+                                          longDecoder,
                                           /* :: */[
                                             (function (param) {
-                                                return leftRightDecoder("less-than", (function (l, r) {
+                                                return leftRightDecoder("less-than-or-equals", (function (l, r) {
                                                               return /* Comparison */Block.__(6, [
-                                                                        "<",
+                                                                        "<=",
                                                                         l,
                                                                         r
                                                                       ]);
@@ -231,9 +223,9 @@ var lazyExpressionDecoder = Caml_obj.caml_lazy_make((function (param) {
                                               }),
                                             /* :: */[
                                               (function (param) {
-                                                  return leftRightDecoder("greater-than", (function (l, r) {
+                                                  return leftRightDecoder("greater-than-or-equals", (function (l, r) {
                                                                 return /* Comparison */Block.__(6, [
-                                                                          ">",
+                                                                          ">=",
                                                                           l,
                                                                           r
                                                                         ]);
@@ -241,9 +233,9 @@ var lazyExpressionDecoder = Caml_obj.caml_lazy_make((function (param) {
                                                 }),
                                               /* :: */[
                                                 (function (param) {
-                                                    return leftRightDecoder("equals", (function (l, r) {
+                                                    return leftRightDecoder("less-than", (function (l, r) {
                                                                   return /* Comparison */Block.__(6, [
-                                                                            "==",
+                                                                            "<",
                                                                             l,
                                                                             r
                                                                           ]);
@@ -251,38 +243,40 @@ var lazyExpressionDecoder = Caml_obj.caml_lazy_make((function (param) {
                                                   }),
                                                 /* :: */[
                                                   (function (param) {
-                                                      return leftRightDecoder("not-equals", (function (l, r) {
+                                                      return leftRightDecoder("greater-than", (function (l, r) {
                                                                     return /* Comparison */Block.__(6, [
-                                                                              "!=",
+                                                                              ">",
                                                                               l,
                                                                               r
                                                                             ]);
                                                                   }), param);
                                                     }),
                                                   /* :: */[
-                                                    coalesceDecoder,
+                                                    (function (param) {
+                                                        return leftRightDecoder("equals", (function (l, r) {
+                                                                      return /* Comparison */Block.__(6, [
+                                                                                "==",
+                                                                                l,
+                                                                                r
+                                                                              ]);
+                                                                    }), param);
+                                                      }),
                                                     /* :: */[
                                                       (function (param) {
-                                                          return leftRightDecoder("or", (function (l, r) {
-                                                                        return /* Or */Block.__(7, [
+                                                          return leftRightDecoder("not-equals", (function (l, r) {
+                                                                        return /* Comparison */Block.__(6, [
+                                                                                  "!=",
                                                                                   l,
                                                                                   r
                                                                                 ]);
                                                                       }), param);
                                                         }),
                                                       /* :: */[
-                                                        (function (param) {
-                                                            return leftRightDecoder("and", (function (l, r) {
-                                                                          return /* And */Block.__(8, [
-                                                                                    l,
-                                                                                    r
-                                                                                  ]);
-                                                                        }), param);
-                                                          }),
+                                                        coalesceDecoder,
                                                         /* :: */[
                                                           (function (param) {
-                                                              return leftRightDecoder("plus", (function (l, r) {
-                                                                            return /* Plus */Block.__(10, [
+                                                              return leftRightDecoder("or", (function (l, r) {
+                                                                            return /* Or */Block.__(7, [
                                                                                       l,
                                                                                       r
                                                                                     ]);
@@ -290,28 +284,78 @@ var lazyExpressionDecoder = Caml_obj.caml_lazy_make((function (param) {
                                                             }),
                                                           /* :: */[
                                                             (function (param) {
-                                                                return leftRightDecoder("times", (function (l, r) {
-                                                                              return /* Times */Block.__(11, [
+                                                                return leftRightDecoder("and", (function (l, r) {
+                                                                              return /* And */Block.__(8, [
                                                                                         l,
                                                                                         r
                                                                                       ]);
                                                                             }), param);
                                                               }),
                                                             /* :: */[
-                                                              containsDecoder,
+                                                              (function (param) {
+                                                                  return leftRightDecoder("plus", (function (l, r) {
+                                                                                return /* Plus */Block.__(10, [
+                                                                                          l,
+                                                                                          r
+                                                                                        ]);
+                                                                              }), param);
+                                                                }),
                                                               /* :: */[
-                                                                stripDecoder,
+                                                                (function (param) {
+                                                                    return leftRightDecoder("times", (function (l, r) {
+                                                                                  return /* Times */Block.__(11, [
+                                                                                            l,
+                                                                                            r
+                                                                                          ]);
+                                                                                }), param);
+                                                                  }),
                                                                 /* :: */[
-                                                                  listDecoder,
+                                                                  (function (param) {
+                                                                      return leftRightDecoder("minus", (function (l, r) {
+                                                                                    return /* Minus */Block.__(12, [
+                                                                                              l,
+                                                                                              r
+                                                                                            ]);
+                                                                                  }), param);
+                                                                    }),
                                                                   /* :: */[
-                                                                    mapDecoder,
+                                                                    (function (param) {
+                                                                        return leftRightDecoder("div", (function (l, r) {
+                                                                                      return /* Divide */Block.__(13, [
+                                                                                                l,
+                                                                                                r
+                                                                                              ]);
+                                                                                    }), param);
+                                                                      }),
                                                                     /* :: */[
-                                                                      floatDecoder,
+                                                                      (function (param) {
+                                                                          return leftRightDecoder("date-diff-years", (function (l, r) {
+                                                                                        return /* DateDiffYears */Block.__(18, [
+                                                                                                  l,
+                                                                                                  r
+                                                                                                ]);
+                                                                                      }), param);
+                                                                        }),
                                                                       /* :: */[
-                                                                        lookupDecoder,
+                                                                        containsDecoder,
                                                                         /* :: */[
-                                                                          rangeDecoder,
-                                                                          /* [] */0
+                                                                          stripDecoder,
+                                                                          /* :: */[
+                                                                            listDecoder,
+                                                                            /* :: */[
+                                                                              mapDecoder,
+                                                                              /* :: */[
+                                                                                floatDecoder,
+                                                                                /* :: */[
+                                                                                  lookupDecoder,
+                                                                                  /* :: */[
+                                                                                    rangeDecoder,
+                                                                                    /* [] */0
+                                                                                  ]
+                                                                                ]
+                                                                              ]
+                                                                            ]
+                                                                          ]
                                                                         ]
                                                                       ]
                                                                     ]
